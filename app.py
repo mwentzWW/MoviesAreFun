@@ -4,9 +4,11 @@ import pandas as pd
 
 df = pd.read_csv('/workspaces/MoviesAreFun/data/movies_metadata.csv')
 
-app = Dash(__name__)
+dash_app = Dash(__name__)
 
-app.layout = html.Div([
+app = dash_app.server
+
+dash_app.layout = html.Div([
     html.H1(children='Movies are fun', style={'textAlign':'center'}),
     dcc.Dropdown(df.original_title.unique(), 'Gladiator', id='title-selection'),
     html.Br(),
@@ -29,4 +31,4 @@ def update_overview(value):
     return overview
 
 if __name__ == '__main__':
-    app.server.run_server()
+    dash_app.run_server(debug=True)
