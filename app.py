@@ -29,4 +29,4 @@ def update_overview(value):
     return overview
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.server.run_server()
