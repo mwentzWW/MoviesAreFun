@@ -1,6 +1,9 @@
-from dash import Dash, html, dcc, callback, Output, Input
+from dash import Dash, html, dcc, callback, Output, Input, dash_table
 import plotly.express as px
 import pandas as pd
+import numpy as np
+
+from src.movietable import movie_table
 
 df = pd.read_csv('/workspaces/MoviesAreFun/data/movies_metadata.csv')
 
@@ -10,9 +13,14 @@ app = dash_app.server
 
 dash_app.layout = html.Div([
     html.H1(children='Movies are fun', style={'textAlign':'center'}),
-    dcc.Dropdown(df.original_title.unique(), 'Gladiator', id='title-selection'),
+    html.Div(
+        dcc.Dropdown(np.sort(df.original_title.unique()), 'Gladiator', id='title-selection'),
+        style = {"width": "300px"}
+    ),
     html.Br(),
-    html.Div(id='title-overview')
+    html.Div(id='title-overview'),
+    html.Br(),
+    movie_table(df)
 ])
 
 @callback(
